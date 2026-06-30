@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityCommunity.UnitySingleton;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     public enum GameState
     {
@@ -38,8 +39,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         SetInitialSettings();
         InitializeStateActions();
         InitializeCoreManagers();
@@ -174,7 +177,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = previousStopTimeScale;
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         foreach (var manager in managers)
         {
