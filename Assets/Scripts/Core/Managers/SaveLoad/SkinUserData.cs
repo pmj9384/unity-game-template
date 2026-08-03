@@ -29,6 +29,7 @@ public class SkinUserData : ISaveLoad
         if (!IsOwned(skinId)) return;
         equippedSkinId = skinId;
         OnSkinEquipped?.Invoke(equippedSkinId);
+        SaveLoadSystem.Instance.Save();   // 구매·정산과 같은 즉시 durable 정책 (TongTongDefence 검수 v6 역이식)
     }
     public bool Unlock(string skinId)
     {

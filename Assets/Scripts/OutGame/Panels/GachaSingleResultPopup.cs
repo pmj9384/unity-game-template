@@ -11,7 +11,7 @@ public class GachaSingleResultPopup : GachaResultPopupBase
     public void ShowWithResult(SkinDataTable.SkinRawData data, bool isNew)
     {
         skinNameText.text = data.SkinName;
-        skinIcon.sprite = Resources.Load<Sprite>($"Sprites/Skins/{data.SkinId}");
+        SkinIconView.Apply(skinIcon, data.SkinId);
         newBadge.SetActive(isNew);
         Show();
     }

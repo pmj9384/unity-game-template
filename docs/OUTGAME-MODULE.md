@@ -11,7 +11,8 @@
 ```
 Scripts/{OutGame, UISystem, Data}  Scripts/Core/{Singleton, Managers(세이브 체인)}
 Scenes/LobbyScene.unity  Prefabs/{GachaResultItemUI, SettingsPanel, UI/SafeAreaPanel, UI/SkinItemUI}
-Resources/Tables/SkinData.csv  Resources/Sprites/UI/card_panel.png  Sprites/Circle.png
+Resources/Tables/SkinData.csv  Sprites/Circle.png
+Resources/Sprites/UI/{card_panel, Panel_Common, Cell_Item, Icon_{Settings,Shop,Stamina,Coin,Home,Skin}}.png
 Plugins/CsvHelper/  Editor/GameDataManagerEditor.cs(코인 치트)
 ```
 
@@ -25,6 +26,9 @@ TongTong 실측 재매핑 4종: 폰트(Kostar SDF 2) / SaveLoadSystem.cs / Sound
 ### 3. 필수 사전 조건 (하나라도 빠지면 부팅 NRE/예외)
 - [ ] `Packages/manifest.json`에 `com.unity.nuget.newtonsoft-json` (세이브 JSON)
 - [ ] **`Resources/Tables/SkinData.csv` 존재** — 부팅 체인이 기본 스킨 장착 때 로드. 없으면 NRE (실사례)
+- [ ] **GameDataManager에 `SkinUserData`/`StaminaSystem` 프로퍼티 배선** — 템플릿 기본은 게임 특화
+  시스템이 TODO로 비워져 있다. 모듈 화면들이 `GameDataManager.Instance.SkinUserData`를 부르므로
+  프로퍼티 선언 + Initialize에서 `new()` + `Load(save)` 두 줄을 살려야 컴파일된다
 - [ ] 태그 `UIManager` 정의 (OutGameManager가 FindGameObjectWithTag)
 - [ ] 게임 씬 이름 — LobbyScreen의 `SceneManager.LoadScene("SampleScene")` 대상 확인
 - [ ] 빌드 씬 목록: LobbyScene=0, 게임씬=1
@@ -40,14 +44,30 @@ TongTong 실측 재매핑 4종: 폰트(Kostar SDF 2) / SaveLoadSystem.cs / Sound
   (예: TongTongDefence `PilotSkinApplier` — 3파츠 SpriteRenderer 교체, 폴백 포함)
 
 ### 5. 스킨 스프라이트 규약
-`Resources/Sprites/Skins/{SkinId}.png` = 아이콘 (SkinItemUI·가챠 팝업·장착 표시 공용).
-Addressables로 옮기려면 로딩 지점을 하나로 모아 치환 (TongTong: `SkinSprites.Load` 단일 지점 +
-`SkinAddressablesSetup` 에디터 일괄 등록 — Addressables 2.9.0, 참고: TongTongDefence 리포)
+`Resources/Sprites/Skins/{SkinId}.png` = 아이콘. 로딩은 **`SkinIconView.Apply(image, skinId)` 단일
+지점**을 거친다 (스킨 창·가챠 결과 2종 공용, 2026-07-28 역이식). 아트가 없는 스킨은 다크 플레이스홀더
+(#2A2E38)로 폴백 — sprite=null을 그대로 두면 유니티 기본 흰 박스가 뜬다 (TongTong 실기 실사례).
+Addressables로 옮기려면 SkinIconView 안의 `Resources.Load` 한 줄만 치환 (TongTong: `SkinSprites.Load` +
+`SkinAddressablesSetup` 에디터 일괄 등록 — Addressables 2.9.0. **주의: 아이콘 텍스처는 Sprite Mode =
+Single이어야 한다** — Multiple이면 번들 경로에서 이름 매칭이 실패해 실기에서만 null이 뜬다, 실사례)
+
+### 5-1. 스킨 창 구조 (2026-07-28 개편)
+SafeAreaPanel > SkinScreen이 해금/미해금 **2구역 + 독립 스크롤**:
+```
+SkinScreen [VerticalLayoutGroup]
+  OwnedHeader("해금 스킨")  OwnedScroll(1행 고정, 자체 스크롤)
+  LockedHeader("미해금 스킨") LockedScroll(남은 공간, 자체 스크롤)
+```
+- 같은 축 중첩 ScrollRect는 안쪽이 드래그를 삼키므로 **형제 스크롤 2개**로 푼 것 — 헤더 고정은 부수 효과
+- SkinScreen 배선 3개: `ownedParent`/`lockedParent` = 각 스크롤의 Content, `lockedHeader` = 미해금 헤더
+- 미해금 카드 = 배경 틴트(#6E7482) + 비활성 "잠금" 버튼 (SkinItemUI.cardBackground 배선 필요)
+- 목록은 화면 Open마다 전량 재생성 — 뽑기 후 재진입 시 구역 이동이 자동 처리, 해금 순간 교체 로직 불필요
 
 ### 6. 검증 체크리스트
 - [ ] 로비 부팅 (NRE 없이), 코인 0/스태미나 5·5
 - [ ] Play → 스태미나 소모 → 게임 진입 / 게임 → 로비 복귀
 - [ ] 코인 치트(+1000) → 뽑기 1/10회 → NEW 뱃지·차감·보유 반영 → 재시작 유지
+- [ ] 스킨 창: 해금/미해금 2구역 분리, 미해금 카드 어두운 톤+잠금, 각 구역 독립 스크롤
 - [ ] 스킨 장착 → 게임 캐릭터 반영
 
 ## 함정 기록 (실사례)
