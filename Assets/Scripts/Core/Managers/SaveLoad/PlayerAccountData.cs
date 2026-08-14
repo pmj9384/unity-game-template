@@ -40,6 +40,7 @@ public class PlayerAccountData : ISaveLoad
         saveData.bgmVolume = SoundManager.Instance.bgmVolume;
         saveData.sfxVolume = SoundManager.Instance.sfxVolume;
         saveData.bestScore = BestScore;
+        saveData.frameRateFps = FrameRateSetting.Current;
     }
 
     public void Load()
@@ -47,6 +48,7 @@ public class PlayerAccountData : ISaveLoad
         BgmVolume = 1f;
         SfxVolume = 1f;
         BestScore = 0;
+        FrameRateSetting.Restore(FrameRateSetting.Default);
     }
 
     public void Load(PlayerAccountDataSave saveData)
@@ -55,5 +57,6 @@ public class PlayerAccountData : ISaveLoad
         BgmVolume = saveData.bgmVolume;
         SfxVolume = saveData.sfxVolume;
         BestScore = saveData.bestScore;
+        FrameRateSetting.Restore(saveData.frameRateFps);   // 부팅 시 저장된 상한을 그대로 적용
     }
 }
