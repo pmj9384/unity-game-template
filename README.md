@@ -36,10 +36,18 @@ Unity 6 기반 모바일 게임 시작 템플릿입니다. 여러 프로젝트�
 
 새 프로젝트를 시작할 때 아래 표를 보고 필요한 것만 추가하면 됩니다.
 
-| 만들 게임 | 할 일 |
+**manifest에 넣는 기준은 "템플릿 코드가 실제로 참조하는가" 하나입니다.** 없으면 컴파일이 안 되는 것만
+넣습니다(Addressables·Newtonsoft·TMP·Input System·AdMob). 게임이 쓸지 말지 모르는 건 안 넣습니다 —
+NavMesh나 Timeline이 그렇습니다. 넣어두면 편해 보이지만, 안 쓰는 패키지는 임포트 시간과 빌드에만
+얹히고 "이건 왜 있지"를 매번 되묻게 됩니다.
+
+| 만들 게임 | 추가할 것 |
 |---|---|
-| 3D | 그대로 씁니다 (URP 3D 기준, NavMesh용 `com.unity.ai.navigation` 포함) |
-| 2D | `com.unity.feature.2d` 추가 + 물리 설정·카메라 투영(Orthographic)·URP 렌더러(2D Renderer) 교체 |
+| 3D | 필요하면 `com.unity.ai.navigation` (NavMesh를 쓸 때만) |
+| 2D | `com.unity.feature.2d` + 물리 설정·카메라 투영(Orthographic)·URP 렌더러(2D Renderer) 교체 |
+
+`test-framework`는 참조하는 테스트가 아직 없지만 남겨둡니다 — 나중에 붙이려면 어셈블리 정의부터
+다시 잡아야 해서, 빈 슬롯을 두는 편이 쌉니다.
 
 `ProjectSettings`와 `Assets/Settings`(URP 렌더러·볼륨 프로파일)가 3D 기준으로 들어 있습니다.
 
