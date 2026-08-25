@@ -36,13 +36,12 @@ Unity 6 기반 모바일 게임 시작 템플릿입니다. 여러 프로젝트�
 
 새 프로젝트를 시작할 때 아래 표를 보고 필요한 것만 추가하면 됩니다.
 
-| 만들 게임 | 추가할 패키지 |
+| 만들 게임 | 할 일 |
 |---|---|
-| 2D | `com.unity.feature.2d` |
-| 3D | `com.unity.ai.navigation` (NavMesh를 쓴다면) |
+| 3D | 그대로 씁니다 (URP 3D 기준이고 `com.unity.ai.navigation`도 이미 들어 있습니다) |
+| 2D | `com.unity.feature.2d` 추가 + 물리 설정·카메라 투영(Orthographic)·URP 렌더러(2D Renderer) 교체 |
 
-`ProjectSettings`는 3D 기준으로 들어 있습니다. 2D로 갈 때는 물리 설정, 카메라 투영(Orthographic),
-URP 렌더러 에셋(2D Renderer)을 바꿔야 합니다.
+`ProjectSettings`와 `Assets/Settings`(URP 렌더러·볼륨 프로파일)가 3D 기준으로 들어 있습니다.
 
 ## 에디터 도구
 
@@ -73,17 +72,21 @@ docs/                모듈별 적용·확장 문서
 
 ## 시작하기
 
-1. Unity Hub로 Unity 6(6000.x) 프로젝트를 새로 만듭니다.
-2. 이 리포의 `Assets/`와 `Packages/manifest.json`을 그 프로젝트에 얹습니다.
-3. 위 표를 보고 차원 전용 패키지(2D면 `feature.2d`, 3D면 `ai.navigation`)를 추가합니다.
+1. 이 리포를 복제하고 Unity 6(6000.3.x)으로 엽니다. 컴파일이 붙는 것까지 확인된 상태입니다.
+2. `Assets/Editor/BuildScript.cs` 맨 위 상수 블록에서 패키지명·제품명·화면 방향을 바꿉니다.
+3. 2D 게임이면 `com.unity.feature.2d`를 추가합니다(3D는 URP 템플릿 기준이라 그대로 씁니다).
 4. `docs/`의 모듈 문서로 아웃게임·로딩 씬 적용 지점을 확인합니다.
 5. 게임 고유 매니저는 `InGameManager`를 상속하고 `"Manager"` 태그를 달아 씬에 두면 `GameManager`가 자동 등록합니다.
 
-## 한계
+검증은 에디터를 안 열고도 됩니다.
 
-`ProjectSettings/`가 아직 들어 있지 않습니다. 그래서 이 리포는 그 자체로 열리는 유니티 프로젝트가
-아니라 코드·에셋 묶음이고, 위 1~2번처럼 새 프로젝트에 얹어야 합니다. 다음 프로젝트를 세울 때 그때
-생성된 `ProjectSettings/`를 여기로 되가져와, 복제 한 번으로 시작할 수 있게 만들 예정입니다.
+```
+unity projects verify .    # meta 누락·무결성
+unity run .                # 임포트 + 컴파일
+unity test .               # EditMode/PlayMode
+```
+
+## 한계
 
 이 템플릿은 하부 구조만 제공하며, 인게임 플레이 로직·아트·사운드 애셋은 포함하지 않습니다.
 광고(`AdsManager`)는 인터페이스 골격만 있어 실제 SDK 연동은 프로젝트에서 붙여야 합니다.
