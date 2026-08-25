@@ -19,3 +19,11 @@ Thumbs.db
 # JetBrains
 .idea/
 *.suo
+
+# Unity 6 (추가)
+*.slnx
+.vscode/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+sysinfo.txt
+crashlytics-build.properties

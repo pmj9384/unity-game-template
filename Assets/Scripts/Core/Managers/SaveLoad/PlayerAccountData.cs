@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAccountData : ISaveLoad
@@ -27,6 +28,37 @@ public class PlayerAccountData : ISaveLoad
         set { sfxVolume = Mathf.Clamp(value, 0.0001f, 1f); }
     }
 
+    public event Action<int> OnCoinsChanged;
+
+    private int coins;
+    public int Coins
+    {
+        get => coins;
+        private set { coins = value; OnCoinsChanged?.Invoke(coins); }
+    }
+
+    public void AddCoins(int amount)
+    {
+        if (amount <= 0) return;
+        Coins += amount;
+    }
+    public bool SpendCoin(int amount)
+    {
+        if (amount <= 0)
+        {
+            return false;
+        }
+        else if (Coins < amount)
+        {
+            return false;
+        }
+        else
+        {
+            Coins -= amount;
+            return true;
+        }
+    }
+
     // TODO: 게임 특화 데이터 추가
 
     public PlayerAccountData()
@@ -40,6 +72,7 @@ public class PlayerAccountData : ISaveLoad
         saveData.bgmVolume = SoundManager.Instance.bgmVolume;
         saveData.sfxVolume = SoundManager.Instance.sfxVolume;
         saveData.bestScore = BestScore;
+        saveData.coins = Coins;
         saveData.frameRateFps = FrameRateSetting.Current;
     }
 
@@ -48,6 +81,7 @@ public class PlayerAccountData : ISaveLoad
         BgmVolume = 1f;
         SfxVolume = 1f;
         BestScore = 0;
+        Coins = 0;
         FrameRateSetting.Restore(FrameRateSetting.Default);
     }
 
@@ -57,6 +91,7 @@ public class PlayerAccountData : ISaveLoad
         BgmVolume = saveData.bgmVolume;
         SfxVolume = saveData.sfxVolume;
         BestScore = saveData.bestScore;
+        Coins = saveData.coins;
         FrameRateSetting.Restore(saveData.frameRateFps);   // 부팅 시 저장된 상한을 그대로 적용
     }
 }
