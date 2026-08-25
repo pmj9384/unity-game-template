@@ -38,7 +38,7 @@ Unity 6 기반 모바일 게임 시작 템플릿입니다. 여러 프로젝트�
 
 | 만들 게임 | 할 일 |
 |---|---|
-| 3D | 그대로 씁니다 (URP 3D 기준이고 `com.unity.ai.navigation`도 이미 들어 있습니다) |
+| 3D | 그대로 씁니다 (URP 3D 기준, NavMesh용 `com.unity.ai.navigation` 포함) |
 | 2D | `com.unity.feature.2d` 추가 + 물리 설정·카메라 투영(Orthographic)·URP 렌더러(2D Renderer) 교체 |
 
 `ProjectSettings`와 `Assets/Settings`(URP 렌더러·볼륨 프로파일)가 3D 기준으로 들어 있습니다.
