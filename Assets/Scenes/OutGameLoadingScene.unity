@@ -234,8 +234,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading... 0%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c4852053149084a78ab0be3c7442e130, type: 2}
-  m_sharedMaterial: {fileID: -7620914930099371182, guid: c4852053149084a78ab0be3c7442e130, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 570cb8d9b1f5547dbbadfe6bca9f3bfe, type: 2}
+  m_sharedMaterial: {fileID: -7620914930099371182, guid: 570cb8d9b1f5547dbbadfe6bca9f3bfe, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -391,8 +391,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: GAME TITLE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c4852053149084a78ab0be3c7442e130, type: 2}
-  m_sharedMaterial: {fileID: -7620914930099371182, guid: c4852053149084a78ab0be3c7442e130, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 570cb8d9b1f5547dbbadfe6bca9f3bfe, type: 2}
+  m_sharedMaterial: {fileID: -7620914930099371182, guid: 570cb8d9b1f5547dbbadfe6bca9f3bfe, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
