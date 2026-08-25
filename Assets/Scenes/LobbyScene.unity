@@ -3163,7 +3163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f32c0c8177694971bd7f58d53ba250d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   slots:
   - {fileID: 587368882}
   - {fileID: 471142897}
@@ -3452,7 +3451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0284b1d6c85b415cbef67d8ce13a469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   skinIcon: {fileID: 1020716547}
   skinNameText: {fileID: 218765838}
   newBadge: {fileID: 1883173648}
