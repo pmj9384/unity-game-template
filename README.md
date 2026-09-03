@@ -24,6 +24,8 @@ Unity 6 기반 모바일 게임 시작 템플릿입니다. 여러 프로젝트�
 
 레벨·스킨 같은 수치 데이터는 `DataTableManager`가 CSV에서 읽어 들여, 밸런스 조정을 코드 수정 없이 하도록 했습니다.
 
+파싱은 `Plugins/CsvHelper.dll` 하나로 통일합니다 — 아웃게임 테이블(`DataTable` 경유)만이 아니라, 게임 쪽 규칙 테이블을 만들 때도 같은 DLL을 씁니다. WarTableSimulator에서 확립한 패턴은 이렇습니다: 게임 규칙 테이블은 별도 asmdef(`Game.Core`, `noEngineReferences`)의 순수 파서가 `ClassMap` 명시 매핑 + 범위 검증(행 번호 보고)으로 읽고, 실패는 `FormatException` 하나로 감싸 호출측이 라이브러리를 모르게 하며, EditMode 테스트가 실제 CSV를 스펙과 전건 대조합니다. 자작 CSV 파서는 만들지 않습니다.
+
 ## 로딩 씬은 Addressables 프리로드와 함께 둡니다
 
 부팅 로딩 씬에서 Addressables 라벨을 프리로드한 뒤 다음 씬으로 넘어가며, 라벨이 아직 없어도 예외 없이 통과하도록 방어해 두었습니다. 적용 절차와 확장 방침은 [`docs/LOADING-SCENE.md`](docs/LOADING-SCENE.md)에 있습니다.
