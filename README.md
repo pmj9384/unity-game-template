@@ -99,4 +99,4 @@ unity test .               # EditMode/PlayMode
 ## 한계
 
 이 템플릿은 하부 구조만 제공하며, 인게임 플레이 로직·아트·사운드 애셋은 포함하지 않습니다.
-광고(`AdsManager`)는 인터페이스 골격만 있어 실제 SDK 연동은 프로젝트에서 붙여야 합니다.
+광고(`AdsManager`)는 Google Mobile Ads로 리워드·배너를 띄우는 코드까지 있고, 광고 단위 ID 두 개(`REPLACE_WITH_*`)와 앱 ID 에셋(`Assets/GoogleMobileAds/Resources/GoogleMobileAdsSettings.asset`)만 프로젝트에서 채웁니다. 배너를 어디서 띄울지는 게임이 정합니다(예: 로비 Open에서 `ShowBanner`, 인게임 진입 때 `HideBanner`).
