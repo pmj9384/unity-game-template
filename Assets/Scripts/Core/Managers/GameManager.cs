@@ -131,9 +131,11 @@ public class GameManager : MonoBehaviour
         gameStateStartAction[(int)currentState]?.Invoke();
     }
 
-    public void RestartGame()
+    // skipReady: 다시 로드한 뒤 GameReady(타이틀·준비 국면)를 건너뛰고 바로 GamePlay로 갈지.
+    // 러너처럼 "탭해서 시작" 화면이면 true, 배치 국면처럼 매판 다시 거쳐야 하면 false (WarTableSimulator 09-14).
+    public void RestartGame(bool skipReady)
     {
-        SkipTitle = true;
+        SkipTitle = skipReady;
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -144,6 +146,19 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("LobbyScene");
+    }
+
+    // 일시정지 복귀 — 이전 상태로 돌아가되 그 상태의 진입 훅은 다시 쏘지 않는다 (초기 세팅이 두 번 돌면 안 된다).
+    // GameStop의 퇴장 훅(timeScale·BGM 복구, 일시정지 창 닫기)만 실행한다. SetGameState(GamePlay)로 복귀하면
+    // GamePlay 진입 훅이 다시 돌아 준비 국면(배치 등)에서 멈췄다 풀 때 게임이 시작돼 버린다 (WarTableSimulator 09-14).
+    public void ResumeFromPause()
+    {
+        if (currentState != GameState.GameStop) return;
+
+        GameState resumeTo = previousState;
+        previousState = currentState;
+        currentState = resumeTo;
+        gameStateExitAction[(int)GameState.GameStop]?.Invoke();
     }
 
     public void AddGameStateEnterAction(GameState state, Action action) => gameStateEnterAction[(int)state] += action;

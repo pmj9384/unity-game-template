@@ -96,7 +96,12 @@ unity run .                # 임포트 + 컴파일
 unity test .               # EditMode/PlayMode
 ```
 
+에디터를 열어 둔 상태에서는 위 배치 명령이 거부되는 대신, 프로젝트에 `unity pipeline install`로 넣은 파이프라인 서버에 붙습니다.
+`unity status --json`에 ready가 뜨면 `unity command run_tests --mode EditMode --json`으로 테스트를 돌리고,
+`recompile`·`get_console_logs`·`get_scene_hierarchy`·`screenshot` 같은 명령(`unity command --list`, 142개)으로 에디터를 읽고 조작할 수 있습니다.
+AI 도구 연결(MCP)은 같은 서버를 쓰므로 따로 등록하지 않아도 됩니다.
+
 ## 한계
 
 이 템플릿은 하부 구조만 제공하며, 인게임 플레이 로직·아트·사운드 애셋은 포함하지 않습니다.
-광고(`AdsManager`)는 인터페이스 골격만 있어 실제 SDK 연동은 프로젝트에서 붙여야 합니다.
+광고(`AdsManager`)는 Google Mobile Ads로 리워드·배너를 띄우는 코드까지 있고, 광고 단위 ID 두 개(`REPLACE_WITH_*`)와 앱 ID 에셋(`Assets/GoogleMobileAds/Resources/GoogleMobileAdsSettings.asset`)만 프로젝트에서 채웁니다. 배너를 어디서 띄울지는 게임이 정합니다(예: 로비 Open에서 `ShowBanner`, 인게임 진입 때 `HideBanner`).

@@ -8,7 +8,7 @@ public class GameOverUIElement : UIElement
     public override void Initialize()
     {
         gameObject.SetActive(false);
-        restartButton.onClick.AddListener(() => gameManager.RestartGame());
+        restartButton.onClick.AddListener(() => gameManager.RestartGame(skipReady: true));
     }
 
     public override void Show() => gameObject.SetActive(true);
