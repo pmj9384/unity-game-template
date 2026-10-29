@@ -42,7 +42,7 @@ public class SliderRow : MonoBehaviour
 
     private void OnMuteClicked()
     {
-        float next = slider.value > 0f ? 0f : lastNonZero;
+        float next = slider.value >= RememberMin ? 0f : lastNonZero;   // 0.0001(SoundManager가 0 대신 저장하는 값)도 꺼진 것으로 본다. > 0이면 한 번은 헛클릭이었다(재검증)
         slider.value = next;   // onValueChanged로 OnSliderChanged가 돈다
     }
 
