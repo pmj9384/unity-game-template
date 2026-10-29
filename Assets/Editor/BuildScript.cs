@@ -14,10 +14,7 @@ public static class BuildScript
     private const string ProductName = "NewGame";
     private const string OutputDir = "Builds";
 
-    // 가로 게임 기본값. 세로 게임이면 Portrait로 바꾸고 AllowPortrait를 true로.
-    private const UIOrientation DefaultOrientation = UIOrientation.AutoRotation;
-    private const bool AllowLandscape = true;
-    private const bool AllowPortrait = false;
+    // 화면 방향은 여기서 정하지 않는다: Tools/Template/가로형·세로형 적용(OrientationPreset)이 ProjectSettings에 남긴 값이 SSOT다(2026-10-29)
     // └──────────────────────────────────────────────────────────────────┘
 
     [MenuItem("Tools/Build/Android APK (로컬 배포)")]
@@ -60,12 +57,6 @@ public static class BuildScript
     {
         PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, ApplicationId);
         PlayerSettings.productName = ProductName;
-
-        PlayerSettings.defaultInterfaceOrientation = DefaultOrientation;
-        PlayerSettings.allowedAutorotateToLandscapeLeft = AllowLandscape;
-        PlayerSettings.allowedAutorotateToLandscapeRight = AllowLandscape;
-        PlayerSettings.allowedAutorotateToPortrait = AllowPortrait;
-        PlayerSettings.allowedAutorotateToPortraitUpsideDown = AllowPortrait;
 
         // IL2CPP + ARM64/ARMv7: Mono/ARMv7만으론 64비트 전용 최신 폰에서 설치가 거부된다
         // (실사례: 타인 폰에 파일로 전달했다가 설치 실패). NDK가 필요하고 빌드 시간이 늘어나는 건 감수한다.

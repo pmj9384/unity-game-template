@@ -30,6 +30,12 @@ Unity 6 기반 모바일 게임 시작 템플릿입니다. 여러 프로젝트�
 
 부팅 로딩 씬에서 Addressables 라벨을 프리로드한 뒤 다음 씬으로 넘어가며, 라벨이 아직 없어도 예외 없이 통과하도록 방어해 두었습니다. 적용 절차와 확장 방침은 [`docs/LOADING-SCENE.md`](docs/LOADING-SCENE.md)에 있습니다.
 
+## 가로형·세로형은 리포 하나에서 템플릿 두 개로 패킹합니다
+
+가로 게임(RPG·스포츠)과 세로 캐주얼은 설정창 배치부터 다릅니다. 리포를 둘로 나누면 매니저·세이브·UI 키트 수정을 두 번 해야 하고 한쪽만 고쳐져 갈라지므로, 리포는 하나로 두고 `Tools/Template/가로형 적용`·`세로형 적용`(`OrientationPreset`)으로 다른 부분만 바꿉니다. 바뀌는 것은 화면 방향, 캔버스 기준 해상도(짧은 변 1080), 설정창 프리팹(가로형 = 왼쪽 세로 탭 / 세로형 = 탭 없는 카드와 소리 스위치)입니다. `tools/pack-templates.sh`가 Hub 템플릿 `com.pmj.template.mobilegame-landscape`와 `-portrait`를 만듭니다. 커밋된 기본은 가로형입니다.
+
+한계: 로비·하단 메뉴 배치는 아직 세로 기준이라 가로 게임은 로비를 다시 짜야 합니다.
+
 ## 2D·3D를 한 리포로 굴립니다
 
 템플릿의 본체(매니저 골격·세이브·아웃게임 메타·오브젝트 풀)는 2D든 3D든 완전히 같아서, 리포를
@@ -79,7 +85,7 @@ Xbox 접근성 가이드, Game Accessibility Guidelines), 그 규칙대로 부�
 
 메뉴 `Tools/` 아래에 있습니다. 새 프로젝트에서 고칠 곳은 각 파일 맨 위 상수 블록뿐입니다.
 
-- **Build/Android APK · AAB** (`BuildScript`) — 패키지명·제품명·화면 방향·아키텍처를 빌드마다 강제해
+- **Build/Android APK · AAB** (`BuildScript`) — 패키지명·제품명·아키텍처를 빌드마다 강제해(화면 방향은 방향 프리셋이 정합니다)
   "설정 빠뜨린 빌드"가 안 나오게 합니다. APK는 로컬 배포·테스트용, AAB는 스토어 제출용입니다.
   씬 목록은 Build Settings를 그대로 읽습니다(복사본을 들고 있다가 씬 추가를 놓치는 사고 방지).
 - **Addressables/Register Folder** (`AddressablesFolderRegistrar`) — 폴더 안 에셋을 그룹에 일괄 등록합니다.
@@ -105,7 +111,7 @@ docs/                모듈별 적용·확장 문서
 ## 시작하기
 
 1. 이 리포를 복제하고 Unity 6(6000.3.x)으로 엽니다. 컴파일이 붙는 것까지 확인된 상태입니다.
-2. `Assets/Editor/BuildScript.cs` 맨 위 상수 블록에서 패키지명·제품명·화면 방향을 바꿉니다.
+2. `Assets/Editor/BuildScript.cs` 맨 위 상수 블록에서 패키지명·제품명을 바꿉니다. 화면 방향은 Hub에서 가로형·세로형 템플릿을 고를 때 정해집니다.
 3. 2D 게임이면 `com.unity.feature.2d`를 추가합니다(3D는 URP 템플릿 기준이라 그대로 씁니다).
 4. `docs/`의 모듈 문서로 아웃게임·로딩 씬 적용 지점을 확인합니다.
 5. 게임 고유 매니저는 `InGameManager`를 상속하고 `"Manager"` 태그를 달아 씬에 두면 `GameManager`가 자동 등록합니다.
