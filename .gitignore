@@ -37,3 +37,6 @@ ProjectSettings/AndroidResolverDependencies.xml
 # LocalMavenRepoDir 설정이 가리키는 리졸브 산출물 위치
 [Aa]ssets/GeneratedLocalRepo/
 [Aa]ssets/GeneratedLocalRepo.meta
+# LevelPlay(com.unity.services.levelplay)가 에디터를 열 때 만드는 어댑터 의존성 목록. 패키지가 다시 만든다(2026-10-29 실수로 커밋됐던 것)
+[Aa]ssets/LevelPlay/
+[Aa]ssets/LevelPlay.meta
